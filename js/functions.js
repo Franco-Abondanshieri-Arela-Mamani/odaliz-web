@@ -86,7 +86,7 @@ function startHeartAnimation() {
 				if (progress >= str.length) {
 					clearInterval(timer);
 				}
-			}, 75);
+			}, 20);
 		});
 		return this;
 	};
@@ -132,5 +132,5 @@ function adjustCodePosition() {
 }
 
 function showLoveU() {
-	$('#loveu').fadeIn(3000);
+	$('#loveu').fadeIn(1000);
 }
