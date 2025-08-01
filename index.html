@@ -66,29 +66,28 @@ body{margin:0;padding:0;background:#ffe;font-size:12px;overflow:auto}
 <audio id="bgMusic" src="music.mp3" preload="auto"></audio>
 
 <script>
-window.addEventListener("load", () => {
-	const audio = document.getElementById("bgMusic");
-	audio.volume = 0;
-	audio.play().catch(() => {}); // evitar error en autoplay
+const audio = document.getElementById("bgMusic");
+let vol = 0;
+const fadeInterval = () => setInterval(() => {
+    if (vol < 1) {
+        vol += 0.01;
+        audio.volume = Math.min(vol, 1);
+    }
+}, 70);
 
-	let vol = 0;
-	const fadeInterval = setInterval(() => {
-		if (vol < 1) {
-			vol += 0.01;
-			audio.volume = Math.min(vol, 1);
-		} else {
-			clearInterval(fadeInterval);
-		}
-	}, 70); // 7 segundos
-});
+const iniciarMusica = () => {
+    audio.volume = 0;
+    audio.play().then(() => {
+        fadeInterval();
+    }).catch(() => {});
+    document.removeEventListener("click", iniciarMusica);
+    document.removeEventListener("touchstart", iniciarMusica);
+};
 
-function showPopup() {
-	document.getElementById("popupImage").style.display = "block";
-}
-function closePopup() {
-	document.getElementById("popupImage").style.display = "none";
-}
+document.addEventListener("click", iniciarMusica);
+document.addEventListener("touchstart", iniciarMusica);
 </script>
+
 
 <script src="./js/jquery.js"></script>
 <script src="./js/garden.js"></script>
